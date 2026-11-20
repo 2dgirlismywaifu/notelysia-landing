@@ -4,24 +4,35 @@ Landing page cá nhân với React, TypeScript và Vite. Giao diện chạy hoà
 
 ## Bắt đầu
 
-Cần Node.js 20 hoặc 22+ và npm. Chạy `npm install`, sau đó `npm run dev` để phát triển. Các lệnh khác:
+Cần Node.js 20 hoặc 22+ và npm. Cài dependencies bằng `npm install`, sau đó chạy `npm run dev` để khởi động server phát triển.
 
-- `npm run test`: chạy kiểm thử.
-- `npm run build`: kiểm tra TypeScript và tạo bản build tại `dist/`.
-- `npm run preview`: xem thử bản build trên máy.
+| Lệnh              | Chức năng                                         |
+|-------------------|---------------------------------------------------|
+| `npm run dev`     | Khởi động server phát triển.                      |
+| `npm run test`    | Chạy bộ kiểm thử.                                 |
+| `npm run build`   | Kiểm tra TypeScript và tạo bản build tại `dist/`. |
+| `npm run preview` | Xem thử bản build trên máy.                       |
 
 Site chạy được ngay cả khi chưa có email hoặc ảnh nền.
 
 ## Cấu trúc dự án
 
-- `src/components/`: component theo chức năng (`avatar`, `background`, `services`, `weather`).
-- `src/config/`: cấu hình chung và danh sách dịch vụ `services.json`.
-- `src/assets/`: tài nguyên, bao gồm ảnh nền và icon dịch vụ cục bộ.
-- `test/`: kiểm thử, chia theo cấu trúc component và cấu hình.
+| Đường dẫn         | Nội dung                                                      |
+|-------------------|---------------------------------------------------------------|
+| `src/components/` | Component chức năng: avatar, background, services và weather. |
+| `src/config/`     | Cấu hình chung và danh sách dịch vụ `services.json`.          |
+| `src/assets/`     | Tài nguyên được bundle, gồm ảnh nền và icon dịch vụ cục bộ.   |
+| `test/`           | Kiểm thử, chia theo component và cấu hình.                    |
 
 ## Cấu hình trang
 
-Chỉnh `src/config/site.ts` để đổi tên trang (`name`), link repository hiển thị bằng nút GitHub trên topbar (`sourceUrl`) hoặc địa điểm thời tiết dự phòng (`fallbackLocation`). Sau khi đổi, build và deploy lại để cập nhật website.
+Chỉnh `src/config/site.ts` để đổi các cấu hình chung của trang. Sau khi đổi, build và deploy lại để cập nhật website.
+
+| Cấu hình           | Chức năng                                           |
+|--------------------|-----------------------------------------------------|
+| `name`             | Tên trang hiển thị ở footer.                        |
+| `sourceUrl`        | Link repository mở khi bấm nút GitHub trên topbar.  |
+| `fallbackLocation` | Địa điểm dự phòng cho thời tiết; xem mục Thời tiết. |
 
 ## Avatar Gravatar
 
@@ -31,13 +42,38 @@ Hash vẫn công khai và có thể bị đối chiếu với email đã biết;
 
 ## Dịch vụ và logo
 
-Chỉnh danh sách trong `src/config/services.json`: mỗi nhóm có `id`, `label` và mảng `services`. Dùng `site` cho dịch vụ cá nhân, `team` cho dịch vụ nhóm. Mỗi dịch vụ có `name`, `description`, `color`, `icon` và có thể thêm `url` cùng `logo`. Màu hỗ trợ `blue`, `peach`, `purple`, `green`; icon hỗ trợ `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`.
+Chỉnh danh sách trong `src/config/services.json`. Mỗi nhóm có `id`, `label` và mảng `services`; dùng `site` cho dịch vụ cá nhân, `team` cho dịch vụ nhóm.
 
-Nếu không đặt `logo`, site tự dùng `/favicon.ico` từ domain của `url`. Đặt `logo` là URL ảnh hoặc đường dẫn đến file trong `public/`, ví dụ `/logos/my-service.png`. Với icon `.ico` được bundle cùng ứng dụng, đặt file trong `src/assets/ico/` rồi dùng dạng `"logo": "asset:ten-file.ico"`; Vite sẽ đóng gói file khi build. Đặt `"logo": null` để luôn dùng icon từ thư viện; Cockpit dùng `"icon": "linux"` theo cách này. URL nên dùng `https://`. Thẻ có URL sẽ mở tab mới; logo bị lỗi sẽ thay bằng icon đã cấu hình.
+| Thuộc tính dịch vụ    | Chức năng                                                                                                                                |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`, `description` | Tên hiển thị và mô tả ngắn.                                                                                                              |
+| `url`                 | Địa chỉ dịch vụ.                                                                                                                         |
+| `redirect`            | `true` cho phép chuyển trang; `false` hiển thị thẻ không thể bấm. Mặc định là `true` nếu bỏ qua.                                         |
+| `color`               | Màu icon của thẻ. Giá trị hỗ trợ: `blue`, `peach`, `purple`, `green`.                                                                    |
+| `icon`                | Icon dự phòng. Giá trị hỗ trợ: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`. |
+| `logo`                | URL ảnh, đường dẫn public, asset local được bundle, hoặc `null` để luôn dùng icon dự phòng.                                              |
 
-Vite tự đọc JSON khi chạy dev. Sau khi thay đổi file, cần build và deploy lại để cập nhật site trên Cloudflare Pages; file không phải là cơ sở dữ liệu hay giao diện quản trị trực tuyến.
+| Cấu hình logo                    | Cách hoạt động                                              |
+|----------------------------------|-------------------------------------------------------------|
+| Bỏ qua `logo`                    | Tự dùng `/favicon.ico` từ domain trong `url`.               |
+| URL ảnh hoặc đường dẫn `/public` | Tải ảnh theo đường dẫn, ví dụ `/logos/my-service.png`.      |
+| `"logo": "asset:ten-file.ico"`   | Bundle file `.ico` trong `src/assets/ico/` bằng Vite.       |
+| `"logo": null`                   | Luôn dùng icon từ thư viện; Cockpit dùng `"icon": "linux"`. |
 
-Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
+Nên dùng URL `https://`. Link dịch vụ có thể bấm sẽ mở tab mới; nếu logo lỗi, icon đã cấu hình sẽ được dùng thay thế.
+
+Danh sách dịch vụ hiện tại:
+
+| Nhóm   | Dịch vụ                                              |
+|--------|------------------------------------------------------|
+| `site` | AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk |
+| `team` | Gunny Taskbar                                        |
+
+Jellyfin dùng đường dẫn favicon có version; nếu nâng cấp Jellyfin làm logo không tải được, hãy cập nhật `logo`. Nếu favicon yêu cầu đăng nhập hoặc không trả về ảnh, hãy dùng ảnh công khai hoặc bundle logo cục bộ. Mỗi nhóm có thể để trống.
+
+Vite tự đọc JSON khi chạy dev. Sau khi thay đổi file, cần build và deploy lại để cập nhật site; đây không phải cơ sở dữ liệu hay giao diện quản trị trực tuyến.
+
+Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
 
 ## Ảnh nền
 
@@ -63,9 +99,11 @@ Workflow `.github/workflows/deploy.yml` chạy test và build trên GitHub-hoste
 
 Trong **Settings → Environments → `landing-env` → Environment variables**, tạo:
 
-- Variable `DEPLOY_PATH`, là thư mục tuyệt đối dành riêng cho website và có quyền ghi cho tài khoản chạy runner, ví dụ `/var/www/notelysia`.
+| Biến          | Chức năng                                                                                                  |
+|---------------|------------------------------------------------------------------------------------------------------------|
+| `DEPLOY_PATH` | Đường dẫn tuyệt đối dành riêng cho website, cần cho phép tài khoản runner ghi, ví dụ `/var/www/notelysia`. |
 
-Trong **Settings → Secrets and variables → Actions → Repository secrets**, tạo secret `GRAVATAR_EMAIL` nếu muốn tạo avatar Gravatar khi build.
+Trong **Settings → Secrets and variables → Actions → Repository secrets**, tạo secret `GRAVATAR_EMAIL` nếu muốn dùng Gravatar. Secret này cũng được truyền vào môi trường build khi cần.
 
 Lệnh đồng bộ xóa các file cũ trong `DEPLOY_PATH`, vì vậy không dùng chung thư mục này với dữ liệu khác.
 

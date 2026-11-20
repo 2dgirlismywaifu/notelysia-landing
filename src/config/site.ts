@@ -4,9 +4,10 @@ export type Service = {
     name: string;
     description: string;
     url?: string;
+    redirect?: boolean;
     logo?: string | null;
     color: string;
-    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux';
+    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux' | 'shield' | 'monitor';
 };
 
 export type ServiceGroup = { id: 'site' | 'team'; label: string; services: Service[] };

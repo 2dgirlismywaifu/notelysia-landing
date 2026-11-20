@@ -33,6 +33,16 @@ describe('Services', () => {
         expect(container.querySelector('.service-icon .lucide-cloud')).toBeTruthy();
     });
 
+    it('renders a service with redirect disabled as a non-clickable card', () => {
+        const nonRedirectGroups: ServiceGroup[] = [
+            { id: 'site', label: 'My services', services: [{ name: 'Private service', description: 'No redirect', color: 'blue', icon: 'cloud', url: 'https://example.com', redirect: false }] },
+        ];
+        const { container } = render(<Services groups={nonRedirectGroups} />);
+        expect(screen.queryByRole('link', { name: /Private service/ })).toBeNull();
+        expect(container.querySelector('.service-disabled')).toBeTruthy();
+        expect(container.querySelector('.service-arrow')).toBeNull();
+    });
+
     it('resolves a bundled local icon configured by asset filename', () => {
         const localGroups: ServiceGroup[] = [
             { id: 'site', label: 'My services', services: [{ name: 'Gunny Taskbar', description: 'Health check', color: 'peach', icon: 'check', url: 'https://example.com', logo: 'asset:gunny-taskbar.ico' }] },

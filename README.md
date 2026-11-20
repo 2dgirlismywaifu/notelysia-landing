@@ -4,24 +4,35 @@ A personal landing page built with React, TypeScript, and Vite. The site runs en
 
 ## Getting started
 
-Node.js 20 or 22+ and npm are required. Run `npm install`, then `npm run dev` to start the development server. Other commands:
+Node.js 20 or 22+ and npm are required. Install dependencies with `npm install`, then start the development server with `npm run dev`.
 
-- `npm run test`: run the test suite.
-- `npm run build`: type-check and create a production build in `dist/`.
-- `npm run preview`: preview the production build locally.
+| Command           | Purpose                                              |
+|-------------------|------------------------------------------------------|
+| `npm run dev`     | Start the development server.                        |
+| `npm run test`    | Run the test suite.                                  |
+| `npm run build`   | Type-check and create a production build in `dist/`. |
+| `npm run preview` | Preview the production build locally.                |
 
 The site works without a configured email address or background images.
 
 ## Project structure
 
-- `src/components/`: feature components (`avatar`, `background`, `services`, `weather`).
-- `src/config/`: shared site configuration and the `services.json` service directory.
-- `src/assets/`: bundled assets, including backgrounds and local service icons.
-- `test/`: tests organized by component and configuration.
+| Path              | Contents                                                             |
+|-------------------|----------------------------------------------------------------------|
+| `src/components/` | Feature components: avatar, background, services, and weather.       |
+| `src/config/`     | Shared site configuration and the `services.json` service directory. |
+| `src/assets/`     | Bundled assets, including backgrounds and local service icons.       |
+| `test/`           | Tests organized by component and configuration.                      |
 
 ## Site configuration
 
-Edit `src/config/site.ts` to change the site name (`name`), the repository URL shown by the GitHub button in the top bar (`sourceUrl`), or the fallback weather location (`fallbackLocation`). Rebuild and deploy the site for changes to appear in production.
+Edit `src/config/site.ts` to change these site-wide settings. Rebuild and deploy the site for changes to appear in production.
+
+| Setting            | Purpose                                                      |
+|--------------------|--------------------------------------------------------------|
+| `name`             | Site name used in the footer.                                |
+| `sourceUrl`        | Repository URL opened by the GitHub button in the top bar.   |
+| `fallbackLocation` | Optional fallback weather location; see [Weather](#weather). |
 
 ## Gravatar
 
@@ -31,11 +42,34 @@ The hash is public and may be matched against known email addresses, so it shoul
 
 ## Services and logos
 
-Edit `src/config/services.json`. Each group has an `id`, `label`, and `services` array. Use `site` for personal services and `team` for team services. Each service has `name`, `description`, `color`, and `icon`, and may also have `url` and `logo`. Supported colors are `blue`, `peach`, `purple`, and `green`; supported icons are `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, and `linux`.
+Edit `src/config/services.json`. Each group has an `id`, `label`, and `services` array. Use `site` for personal services and `team` for team services.
 
-If `logo` is omitted, the site uses `/favicon.ico` from the service URL's domain. Set `logo` to an image URL or a file path under `public/`, such as `/logos/my-service.png`. To bundle a local `.ico` with the app, put it in `src/assets/ico/` and set `"logo": "asset:filename.ico"`; Vite includes the file in the production build. Set `"logo": null` to always use the configured library icon; Cockpit uses `"icon": "linux"` this way. Prefer `https://` URLs. Service links open in a new tab; a failed logo falls back to the configured icon.
+| Service field         | Purpose                                                                                                                                    |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`, `description` | Display name and short description.                                                                                                        |
+| `url`                 | Destination URL for the service.                                                                                                           |
+| `redirect`            | `true` allows navigation; `false` renders a non-clickable card. Defaults to `true` when omitted.                                           |
+| `color`               | Card icon color. Supported values: `blue`, `peach`, `purple`, `green`.                                                                     |
+| `icon`                | Fallback icon. Supported values: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`. |
+| `logo`                | Optional image URL, public path, local bundled asset, or `null` to always use the fallback icon.                                           |
 
-The current directory includes AdGuard Home, Cockpit, Jellyfin, and Gunny Taskbar. Jellyfin uses a versioned favicon path; update its `logo` if a Jellyfin upgrade changes that path. If a service favicon requires authentication or does not return an image, use a publicly accessible image or bundle a local logo. Groups may be empty.
+| Logo configuration             | Behavior                                                                 |
+|--------------------------------|--------------------------------------------------------------------------|
+| `logo` omitted                 | Uses `/favicon.ico` from the service URL's domain.                       |
+| Image URL or `/public` path    | Loads that image, for example `/logos/my-service.png`.                   |
+| `"logo": "asset:filename.ico"` | Bundles an `.ico` from `src/assets/ico/` with Vite.                      |
+| `"logo": null`                 | Always uses the configured library icon; Cockpit uses `"icon": "linux"`. |
+
+Prefer `https://` URLs. Clickable service links open in a new tab; a failed logo falls back to the configured icon.
+
+The current directory includes:
+
+| Group  | Services                                             |
+|--------|------------------------------------------------------|
+| `site` | AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk |
+| `team` | Gunny Taskbar                                        |
+
+Jellyfin uses a versioned favicon path; update its `logo` if a Jellyfin upgrade changes that path. If a service favicon requires authentication or does not return an image, use a publicly accessible image or bundle a local logo. Groups may be empty.
 
 Vite reads the JSON configuration during development. Rebuild and deploy after changing it; this file is not a database or an online admin interface.
 
@@ -65,9 +99,11 @@ Register a **GitHub Actions self-hosted runner** on the server, label it `notely
 
 Under **Settings → Environments → `landing-env` → Environment variables**, create:
 
-- `DEPLOY_PATH`: a dedicated absolute path for the site that is writable by the runner account, for example `/var/www/notelysia`.
+| Variable      | Purpose                                                                                                 |
+|---------------|---------------------------------------------------------------------------------------------------------|
+| `DEPLOY_PATH` | Dedicated absolute path for the site, writable by the runner account, for example `/var/www/notelysia`. |
 
-Under **Settings → Secrets and variables → Actions → Repository secrets**, create the `GRAVATAR_EMAIL` secret if you want to use Gravatar.
+Under **Settings → Secrets and variables → Actions → Repository secrets**, create `GRAVATAR_EMAIL` if you want to use Gravatar. This secret is also supplied as a build environment variable where needed.
 
 The sync command deletes old files in `DEPLOY_PATH`, so do not share that directory with other data.
 

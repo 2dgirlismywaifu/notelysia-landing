@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import { ArrowUpRight, CalendarDays, CheckSquare, Cloud, FileText, Image, LayoutGrid, MessageCircle, Play, Server, UsersRound } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, CheckSquare, Cloud, FileText, Image, LayoutGrid, MessageCircle, Monitor, Play, Server, Shield, UsersRound } from 'lucide-react';
 import { SiLinux } from 'react-icons/si';
 import type { Service, ServiceGroup } from '../../config/site';
 
-const icons = { cloud: Cloud, photo: Image, play: Play, server: Server, message: MessageCircle, calendar: CalendarDays, file: FileText, check: CheckSquare, linux: SiLinux };
+const icons = { cloud: Cloud, photo: Image, play: Play, server: Server, message: MessageCircle, calendar: CalendarDays, file: FileText, check: CheckSquare, linux: SiLinux, shield: Shield, monitor: Monitor };
 const localLogos = import.meta.glob<string>('../../assets/ico/*', {
     eager: true, query: '?url', import: 'default',
 });
@@ -23,20 +23,21 @@ function ServiceCard({ service }: { service: Service }) {
             // Invalid or relative service URLs cannot provide an origin favicon.
         }
     }
+    const canRedirect = Boolean(service.url) && service.redirect !== false;
     const content = (
         <>
             <span className={`service-icon icon-${service.color}`}>
                 {logo && logo !== failedLogo ? <img src={logo} alt="" onError={() => setFailedLogo(logo!)} /> : <Icon size={20} strokeWidth={1.7} data-icon={service.icon} aria-hidden="true" />}
             </span>
             <span className="service-copy"><strong>{service.name}</strong><span>{service.description}</span></span>
-            <ArrowUpRight className="service-arrow" size={17} aria-hidden="true" />
+            {canRedirect && <ArrowUpRight className="service-arrow" size={17} aria-hidden="true" />}
         </>
     );
 
-    return service.url ? (
+    return canRedirect ? (
         <a className="service-card" href={service.url} target="_blank" rel="noopener noreferrer">{content}</a>
     ) : (
-        <div className="service-card service-placeholder" title="Dịch vụ mẫu — hãy thêm URL trong cấu hình">{content}</div>
+        <div className={`service-card ${service.url ? 'service-disabled' : 'service-placeholder'}`} title={service.url ? 'Navigation disabled by configuration' : 'Dịch vụ mẫu — hãy thêm URL trong cấu hình'}>{content}</div>
     );
 }
 
