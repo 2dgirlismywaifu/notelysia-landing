@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, Image } from 'lucide-react';
 
 const modules = import.meta.glob<string>('../../assets/backgrounds/*', {
@@ -15,10 +15,47 @@ export function sortBackgrounds(files: Record<string, string>): string[] {
 
 const backgrounds = sortBackgrounds(modules);
 
+function makeBlurredBackground(image: HTMLImageElement): string | null {
+    const width = 192;
+    const height = Math.max(1, Math.round(width * image.naturalHeight / image.naturalWidth));
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext('2d');
+    if (!context) return null;
+    context.drawImage(image, 0, 0, width, height);
+    return canvas.toDataURL('image/jpeg', 0.8);
+}
+
 export default function Background({ images = backgrounds }: { images?: string[] }) {
     const [index, setIndex] = useState(0);
     const [failed, setFailed] = useState<string[]>([]);
     const current = images[index];
+
+    useEffect(() => {
+        const root = document.documentElement;
+        if (!current) {
+            root.style.removeProperty('--root-image');
+            return;
+        }
+        let cancelled = false;
+        const probe = new window.Image();
+        probe.onload = () => {
+            if (cancelled) return;
+            try {
+                const blurred = makeBlurredBackground(probe);
+                if (blurred) root.style.setProperty('--root-image', `url("${blurred}")`);
+            } catch {
+                root.style.removeProperty('--root-image');
+            }
+        };
+        probe.src = current;
+        return () => {
+            cancelled = true;
+            probe.onload = null;
+            root.style.removeProperty('--root-image');
+        };
+    }, [current]);
 
     function move(direction: number) {
         setIndex((previous) => (previous + direction + images.length) % images.length);
