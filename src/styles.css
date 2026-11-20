@@ -21,6 +21,8 @@ html {
 body {
     margin: 0;
     min-width: 320px;
+    background-color: #151925;
+    background-image: var(--ambient-shade), var(--ambient-background);
 }
 
 button,
