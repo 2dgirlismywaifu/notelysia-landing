@@ -50,3 +50,18 @@ Chọn **Tìm địa điểm**, nhập ít nhất hai ký tự và chọn từ g
 Kết nối repository với Cloudflare Pages, chọn build command `npm run build` và output directory `dist`. Đặt `GRAVATAR_EMAIL` trong environment variables của build trên Cloudflare, rồi deploy lại. Biến build cần được bảo vệ trong tài khoản Cloudflare; không commit email vào repository. Trang không yêu cầu backend.
 
 Trong Cloudflare Pages, thêm `notelysia.com` ở **Custom domains** và làm theo hướng dẫn xác minh/cấu hình DNS cho domain gốc. Domain gốc phải thuộc zone Cloudflare tương ứng; kiểm tra các bản ghi hiện có trước khi thay đổi để không ảnh hưởng các subdomain dịch vụ. Việc cấu hình tại Cloudflare không được thực hiện tự động bởi dự án này.
+
+## GitHub Actions deploy lên server riêng
+
+Workflow `.github/workflows/deploy.yml` chạy test và build trên GitHub-hosted runner khi tạo pull request vào `main`, push lên `main` hoặc chạy thủ công. Khi push hoặc chạy thủ công trên `main`, GitHub gửi artifact `dist/` cho GitHub Actions self-hosted runner trên server để chép vào thư mục web. Server không cần mở SSH inbound; runner kết nối outbound tới GitHub. Build của pull request không nhận secret `GRAVATAR_EMAIL`.
+
+Đăng ký thêm một **GitHub Actions self-hosted runner** trên server, gắn nhãn `notelysia-deploy` và chạy runner dưới tài khoản có quyền ghi vào thư mục web. Không chạy runner này bằng tài khoản `root`. Server cần outbound HTTPS tới GitHub để runner nhận job và tải artifact; `rsync` cần được cài trên server. Chỉ job deploy trên `main` dùng runner này, không dùng nó cho pull request.
+
+Trong **Settings → Secrets and variables → Actions**, tạo:
+
+- Variable `DEPLOY_PATH`, là thư mục tuyệt đối dành riêng cho website và có quyền ghi cho tài khoản chạy runner, ví dụ `/var/www/notelysia`.
+- Secret `GRAVATAR_EMAIL` nếu muốn tạo avatar Gravatar khi build.
+
+Lệnh đồng bộ xóa các file cũ trong `DEPLOY_PATH`, vì vậy không dùng chung thư mục này với dữ liệu khác.
+
+GitLab Runner hiện có không trực tiếp chạy workflow GitHub Actions. Có thể cài GitHub Actions runner song song trên cùng server; hai runner là hai dịch vụ riêng biệt.

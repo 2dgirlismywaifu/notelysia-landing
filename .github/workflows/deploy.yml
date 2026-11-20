@@ -1,0 +1,77 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build site (pull request)
+        if: github.event_name == 'pull_request'
+        run: npm run build
+
+      - name: Build site
+        if: github.event_name != 'pull_request'
+        run: npm run build
+        env:
+          GRAVATAR_EMAIL: ${{ vars.GRAVATAR_EMAIL }}
+
+      - name: Upload built site
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: dist/
+          if-no-files-found: error
+          retention-days: 1
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: [self-hosted, linux, notelysia-landing-ci]
+    steps:
+      - name: Download built site
+        uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: dist/
+
+      - name: Deploy locally on server
+        env:
+          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+        run: |
+          set -euo pipefail
+          if [[ ! "$DEPLOY_PATH" =~ ^/[A-Za-z0-9_./-]+$ || "$DEPLOY_PATH" == "/" || "$DEPLOY_PATH" == *".."* ]]; then
+            echo "DEPLOY_PATH must be a dedicated absolute path without '..'" >&2
+            exit 1
+          fi
+
+          mkdir -p "$DEPLOY_PATH"
+          rsync -az --delete dist/ "$DEPLOY_PATH/"
