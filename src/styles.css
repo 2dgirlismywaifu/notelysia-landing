@@ -1,7 +1,6 @@
 :root {
     --ambient-background: radial-gradient(ellipse at 53% 4%, #5d5569 0%, transparent 42%), radial-gradient(ellipse at 15% 50%, #384b52 0%, transparent 40%), radial-gradient(ellipse at 87% 68%, #50404d 0%, transparent 41%), linear-gradient(140deg, #242b37, #151925 60%, #29232c);
     --ambient-shade: linear-gradient(180deg, rgba(13, 16, 25, .48), rgba(13, 16, 25, .46) 45%, rgba(13, 16, 25, .78)), linear-gradient(rgba(14, 17, 26, .2), rgba(14, 17, 26, .2));
-    --bleed: 160px;
     font-family: 'DM Sans', sans-serif;
     color: #f4f1ef;
     background: var(--ambient-shade), var(--ambient-background);
@@ -66,7 +65,7 @@ button {
 }
 
 .background {
-    inset: calc(-1 * var(--bleed)) -32px;
+    inset: -32px;
     background: var(--ambient-background);
 }
 
@@ -78,7 +77,6 @@ button {
 }
 
 .background-shade {
-    inset: calc(-1 * var(--bleed)) -32px;
     background: var(--ambient-shade);
 }
 
