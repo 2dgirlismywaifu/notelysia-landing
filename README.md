@@ -55,12 +55,13 @@ Trong Cloudflare Pages, thêm `notelysia.com` ở **Custom domains** và làm th
 
 Workflow `.github/workflows/deploy.yml` chạy test và build trên GitHub-hosted runner khi tạo pull request vào `main`, push lên `main` hoặc chạy thủ công. Khi push hoặc chạy thủ công trên `main`, GitHub gửi artifact `dist/` cho GitHub Actions self-hosted runner trên server để chép vào thư mục web. Server không cần mở SSH inbound; runner kết nối outbound tới GitHub. Build của pull request không nhận secret `GRAVATAR_EMAIL`.
 
-Đăng ký thêm một **GitHub Actions self-hosted runner** trên server, gắn nhãn `notelysia-deploy` và chạy runner dưới tài khoản có quyền ghi vào thư mục web. Không chạy runner này bằng tài khoản `root`. Server cần outbound HTTPS tới GitHub để runner nhận job và tải artifact; `rsync` cần được cài trên server. Chỉ job deploy trên `main` dùng runner này, không dùng nó cho pull request.
+Đăng ký thêm một **GitHub Actions self-hosted runner** trên server, gắn nhãn `notelysia-landing-ci` và chạy runner dưới tài khoản có quyền ghi vào thư mục web. Không chạy runner này bằng tài khoản `root`. Server cần outbound HTTPS tới GitHub để runner nhận job và tải artifact; `rsync` cần được cài trên server. Chỉ job deploy trên `main` dùng runner này, không dùng nó cho pull request.
 
-Trong **Settings → Secrets and variables → Actions**, tạo:
+Trong **Settings → Environments → `landing-env` → Environment variables**, tạo:
 
 - Variable `DEPLOY_PATH`, là thư mục tuyệt đối dành riêng cho website và có quyền ghi cho tài khoản chạy runner, ví dụ `/var/www/notelysia`.
-- Secret `GRAVATAR_EMAIL` nếu muốn tạo avatar Gravatar khi build.
+
+Trong **Settings → Secrets and variables → Actions → Repository secrets**, tạo secret `GRAVATAR_EMAIL` nếu muốn tạo avatar Gravatar khi build.
 
 Lệnh đồng bộ xóa các file cũ trong `DEPLOY_PATH`, vì vậy không dùng chung thư mục này với dữ liệu khác.
 

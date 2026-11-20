@@ -55,6 +55,7 @@ jobs:
   deploy:
     needs: build
     if: github.ref == 'refs/heads/main'
+    environment: landing-env
     runs-on: [self-hosted, linux, notelysia-landing-ci]
     steps:
       - name: Download built site
