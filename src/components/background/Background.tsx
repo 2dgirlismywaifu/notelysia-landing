@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Image } from 'lucide-react';
 
 const modules = import.meta.glob<string>('../../assets/backgrounds/*', {
@@ -15,40 +15,10 @@ export function sortBackgrounds(files: Record<string, string>): string[] {
 
 const backgrounds = sortBackgrounds(modules);
 
-// Downscaling then letting CSS upscale gives a cheap blur that works on Safari (no canvas filter).
-function blurredDataUrl(image: HTMLImageElement): string | null {
-    const width = 192;
-    const height = Math.max(1, Math.round(width * image.naturalHeight / image.naturalWidth));
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const context = canvas.getContext('2d');
-    if (!context) return null;
-    context.drawImage(image, 0, 0, width, height);
-    return canvas.toDataURL('image/jpeg', 0.8);
-}
-
 export default function Background({ images = backgrounds }: { images?: string[] }) {
     const [index, setIndex] = useState(0);
     const [failed, setFailed] = useState<string[]>([]);
     const current = images[index];
-
-    // Safari paints the root canvas under its top/bottom bars, so it must show the same blurred image.
-    useEffect(() => {
-        const root = document.documentElement;
-        if (!current) return;
-        let cancelled = false;
-        const probe = new window.Image();
-        probe.onload = () => {
-            if (cancelled) return;
-            try {
-                const url = blurredDataUrl(probe);
-                if (url) root.style.setProperty('--root-image', `url(${url})`);
-            } catch { /* keep previous image */ }
-        };
-        probe.src = current;
-        return () => { cancelled = true; probe.onload = null; };
-    }, [current]);
 
     function move(direction: number) {
         setIndex((previous) => (previous + direction + images.length) % images.length);
