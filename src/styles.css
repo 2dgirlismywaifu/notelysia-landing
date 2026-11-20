@@ -581,19 +581,62 @@ main {
     margin-left: 2px;
 }
 
+.service-panel {
+    padding-top: 18px;
+}
+
+.service-panel[hidden] {
+    display: none;
+}
+
 .service-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: minmax(76px, auto);
     align-content: start;
     gap: 10px;
-    height: 180px;
-    padding-top: 18px;
-    overflow-y: auto;
+    min-height: 162px;
 }
 
-.service-grid[hidden] {
-    display: none;
+.service-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.service-pagination button {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .045);
+    color: rgba(255, 255, 255, .82);
+    transition: background .2s, border-color .2s, color .2s;
+}
+
+.service-pagination button:not(:disabled):hover {
+    border-color: rgba(230, 180, 161, .55);
+    background: rgba(230, 180, 161, .14);
+    color: #fff;
+}
+
+.service-pagination button:disabled {
+    opacity: .38;
+    cursor: default;
+}
+
+.service-pagination>span {
+    min-width: 42px;
+    color: rgba(255, 255, 255, .58);
+    font-size: 11px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
 }
 
 .service-card {
@@ -866,7 +909,17 @@ a.service-card:hover {
 
     .service-grid {
         grid-template-columns: 1fr;
-        height: 266px;
+        min-height: 334px;
+    }
+
+    .service-pagination {
+        gap: 14px;
+        margin-top: 14px;
+    }
+
+    .service-pagination button {
+        width: 44px;
+        height: 44px;
     }
 
     .tab-bar {

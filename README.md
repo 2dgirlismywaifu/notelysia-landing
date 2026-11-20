@@ -73,6 +73,8 @@ Jellyfin uses a versioned favicon path; update its `logo` if a Jellyfin upgrade 
 
 Vite reads the JSON configuration during development. Rebuild and deploy after changing it; this file is not a database or an online admin interface.
 
+Service cards are displayed four per page on both desktop and mobile. The reusable `ServiceList` component uses pagination instead of a nested scrollbar.
+
 ## Background images
 
 Add images to `src/assets/backgrounds/` with names such as `background-1.jpg`, `background-2.webp`, and `background-10.png`. Supported extensions are `.jpg`, `.jpeg`, `.png`, and `.webp`; images are sorted numerically. If two files have the same number, their filenames determine the order. Rebuild and deploy after adding or replacing images. If no image is available, a default gradient is shown.

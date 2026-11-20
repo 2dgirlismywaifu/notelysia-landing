@@ -73,6 +73,8 @@ Jellyfin dùng đường dẫn favicon có version; nếu nâng cấp Jellyfin l
 
 Vite tự đọc JSON khi chạy dev. Sau khi thay đổi file, cần build và deploy lại để cập nhật site; đây không phải cơ sở dữ liệu hay giao diện quản trị trực tuyến.
 
+Thẻ dịch vụ hiển thị bốn mục mỗi trang trên cả desktop và mobile. Component dùng chung `ServiceList` phân trang thay vì tạo thanh cuộn lồng bên trong.
+
 Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
 
 ## Ảnh nền
