@@ -1,0 +1,45 @@
+[
+    {
+        "id": "site",
+        "label": "My services",
+        "services": [
+            {
+                "name": "AdGuard Home",
+                "description": "Network-wide protection",
+                "url": "https://adguardhome.notelysia.com",
+                "logo": "https://adguardhome.notelysia.com/assets/favicon.png",
+                "color": "green",
+                "icon": "server"
+            },
+            {
+                "name": "Cockpit",
+                "description": "Home server management",
+                "url": "https://cockpit-home.notelysia.com",
+                "logo": "https://cockpit-home.notelysia.com/favicon.ico",
+                "color": "blue",
+                "icon": "linux"
+            },
+            {
+                "name": "Jellyfin",
+                "description": "Your media, your way",
+                "url": "https://jellyfin.notelysia.com",
+                "logo": "https://jellyfin.notelysia.com/web/favicons/touchicon144.png",
+                "color": "purple",
+                "icon": "play"
+            }
+        ]
+    },
+    {
+        "id": "team",
+        "label": "Team workspace",
+        "services": [
+            {
+                "name": "Gunny Taskbar",
+                "description": "Gunny Taskbar mini-game",
+                "url": "https://gunny-taskbar.notelysia.com",
+                "color": "peach",
+                "icon": "check"
+            }
+        ]
+    }
+]

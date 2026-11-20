@@ -1,0 +1,1 @@
+Thêm ảnh theo tên `background-1.jpg`, `background-2.webp`, ... rồi build lại.
