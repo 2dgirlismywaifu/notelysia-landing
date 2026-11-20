@@ -21,8 +21,8 @@ export default function App() {
 
     return (
         <>
-            <Background />
             <div className="app-shell">
+                <Background />
                 <div className="page-content">
                     <header className="topbar">
                         <a className="brand" href="#home" aria-label="Notelysia home"><Avatar compact /><span>notelysia<span className="brand-dot">.</span></span></a>
