@@ -17,7 +17,7 @@
                 "description": "Home server management",
                 "url": "https://cockpit-home.notelysia.com",
                 "redirect": true,
-                "logo": "https://cockpit-home.notelysia.com/favicon.ico",
+                "logo": null,
                 "color": "blue",
                 "icon": "linux"
             },
@@ -35,6 +35,7 @@
                 "description": "Secure VPN connection",
                 "url": "https://wireguard.notelysia.com",
                 "redirect": false,
+                "logo": null,
                 "color": "green",
                 "icon": "shield"
             },
@@ -43,6 +44,7 @@
                 "description": "Remote desktop",
                 "url": "https://rustdesk.notelysia.com",
                 "redirect": false,
+                "logo": null,
                 "color": "blue",
                 "icon": "monitor"
             }
