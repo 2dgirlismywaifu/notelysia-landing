@@ -81,6 +81,8 @@ Add images to `src/assets/backgrounds/` with names such as `background-1.jpg`, `
 
 With two or more images, desktop shows previous/next buttons at the sides. On mobile, those are replaced by a compact bottom control with previous/next buttons and an image counter. The background remains blurred on both form factors.
 
+On iOS, the background extends into the safe areas while content and controls stay within them. When opened from the Home Screen, the status bar overlays the background. Safari's own browser bars remain under Safari's control and cannot display the page's background image.
+
 ## Weather
 
 The widget requests the browser's location and gets current weather from Open-Meteo; no API key is required. Geolocation requires HTTPS or localhost. If permission is denied or location is unavailable, set `fallbackLocation` in `src/config/site.ts`, for example `{ latitude: 21.03, longitude: 105.85, name: 'Hanoi' }`. By default there is no fallback location, so the widget offers guidance and a retry action. Network errors also include a retry action.

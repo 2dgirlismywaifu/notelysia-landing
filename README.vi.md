@@ -81,6 +81,8 @@ Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin, Wir
 
 Đặt ảnh vào `src/assets/backgrounds/` với tên như `background-1.jpg`, `background-2.webp`, `background-10.png`. Hỗ trợ `.jpg`, `.jpeg`, `.png` và `.webp`; ảnh được sắp theo số. Nếu hai ảnh cùng số, tên file quyết định thứ tự. Build/deploy lại sau khi thêm hoặc thay ảnh. Không có ảnh thì dùng gradient mặc định. Khi có ít nhất hai ảnh, desktop hiển thị nút chuyển ở hai bên; mobile dùng thanh điều khiển nhỏ ở cạnh dưới với nút trước/sau và bộ đếm. Ảnh nền vẫn được làm mờ trên cả desktop và mobile.
 
+Trên iOS, nền mở rộng vào safe area, còn nội dung và nút điều khiển vẫn nằm trong vùng an toàn. Khi mở từ màn hình chính, thanh trạng thái phủ lên nền. Các thanh giao diện của Safari do trình duyệt kiểm soát và không thể hiển thị ảnh nền của trang.
+
 ## Thời tiết
 
 Widget xin quyền vị trí từ trình duyệt và lấy thời tiết hiện tại từ Open-Meteo, không cần API key. Geolocation yêu cầu HTTPS hoặc localhost. Nếu không cấp quyền hoặc vị trí không khả dụng, bạn có thể đặt `fallbackLocation` trong `src/config/site.ts`, ví dụ `{ latitude: 21.03, longitude: 105.85, name: 'Hà Nội' }`. Mặc định không có địa điểm dự phòng, widget sẽ hướng dẫn và cho phép thử lại. Lỗi mạng cũng có nút thử lại.
