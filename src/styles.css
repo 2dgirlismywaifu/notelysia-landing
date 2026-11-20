@@ -102,6 +102,24 @@ button {
     background: var(--ambient-shade);
 }
 
+.safe-edge {
+    position: fixed;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    transition: background-color .5s;
+}
+
+.safe-edge-top {
+    top: 0;
+    height: env(safe-area-inset-top);
+}
+
+.safe-edge-bottom {
+    bottom: 0;
+    height: env(safe-area-inset-bottom);
+}
+
 .page-content {
     position: relative;
     max-width: 1440px;
