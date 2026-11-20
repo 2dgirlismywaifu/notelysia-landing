@@ -15,7 +15,14 @@
 
 html {
     min-width: 320px;
-    scroll-behavior: smooth;
+}
+
+html,
+body {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
 }
 
 body {
@@ -23,6 +30,22 @@ body {
     min-width: 320px;
     background-color: #151925;
     background-image: var(--ambient-shade), var(--ambient-background);
+}
+
+#root {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+#scroll-root {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: clip;
+    overscroll-behavior: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 button,
@@ -54,7 +77,7 @@ button {
     min-height: 100vh;
     min-height: 100dvh;
     position: relative;
-    overflow: hidden;
+    overflow-x: clip;
 }
 
 .background,
@@ -945,7 +968,7 @@ a.service-card:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html {
+    #scroll-root {
         scroll-behavior: auto;
     }
 
