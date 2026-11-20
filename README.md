@@ -1,68 +1,74 @@
 # Notelysia Landing
 
-Landing page cá nhân với React, TypeScript và Vite. Giao diện chạy hoàn toàn trên trình duyệt và có thể deploy dưới dạng site tĩnh trên Cloudflare Pages.
+A personal landing page built with React, TypeScript, and Vite. The site runs entirely in the browser and can be deployed as a static site.
 
-## Bắt đầu
+## Getting started
 
-Cần Node.js 20 hoặc 22+ và npm. Chạy `npm install`, sau đó `npm run dev` để phát triển. Các lệnh khác:
+Node.js 20 or 22+ and npm are required. Run `npm install`, then `npm run dev` to start the development server. Other commands:
 
-- `npm run test`: chạy kiểm thử.
-- `npm run build`: kiểm tra TypeScript và tạo bản build tại `dist/`.
-- `npm run preview`: xem thử bản build trên máy.
+- `npm run test`: run the test suite.
+- `npm run build`: type-check and create a production build in `dist/`.
+- `npm run preview`: preview the production build locally.
 
-Site chạy được ngay cả khi chưa có email hoặc ảnh nền.
+The site works without a configured email address or background images.
 
-## Cấu trúc dự án
+## Project structure
 
-- `src/components/`: component theo chức năng (`avatar`, `background`, `services`, `weather`).
-- `src/config/`: cấu hình chung và danh sách dịch vụ `services.json`.
-- `src/assets/`: tài nguyên, bao gồm ảnh nền.
-- `test/`: kiểm thử, chia theo cấu trúc component và cấu hình.
+- `src/components/`: feature components (`avatar`, `background`, `services`, `weather`).
+- `src/config/`: shared site configuration and the `services.json` service directory.
+- `src/assets/`: bundled assets, including backgrounds and local service icons.
+- `test/`: tests organized by component and configuration.
 
-## Avatar Gravatar
+## Site configuration
 
-Thêm email Gravatar của bạn vào `GRAVATAR_EMAIL` trong `.env` (tham khảo `.env.example`), rồi khởi động lại dev server hoặc build lại. Email được chuẩn hóa và băm SHA-256 trong quá trình build; mã trang chỉ chứa hash, không chứa email thô. `.env` được Git bỏ qua.
+Edit `src/config/site.ts` to change the site name (`name`), the repository URL shown by the GitHub button in the top bar (`sourceUrl`), or the fallback weather location (`fallbackLocation`). Rebuild and deploy the site for changes to appear in production.
 
-Hash vẫn công khai và có thể bị đối chiếu với email đã biết; không nên xem hash là biện pháp bảo mật email. Gravatar được dùng cho avatar, logo đầu trang và biểu tượng tab. Nếu chưa cấu hình email hoặc ảnh Gravatar không tồn tại, site hiển thị biểu tượng dự phòng.
+## Gravatar
 
-## Dịch vụ và logo
+Set `GRAVATAR_EMAIL` in `.env` (see `.env.example`), then restart the dev server or rebuild. The email is normalized and SHA-256 hashed at build time; the page contains the hash, not the raw email. `.env` is ignored by Git.
 
-Chỉnh danh sách trong `src/config/services.json`: mỗi nhóm có `id`, `label` và mảng `services`. Dùng `site` cho dịch vụ cá nhân, `team` cho dịch vụ nhóm. Mỗi dịch vụ có `name`, `description`, `color`, `icon` và có thể thêm `url` cùng `logo`. Màu hỗ trợ `blue`, `peach`, `purple`, `green`; icon hỗ trợ `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`.
+The hash is public and may be matched against known email addresses, so it should not be considered email protection. Gravatar is used for the avatar, top-bar logo, and favicon. If no email is configured or no Gravatar image exists, the site displays fallback icons.
 
-Nếu không đặt `logo`, site tự dùng `/favicon.ico` từ domain của `url`. Đặt `logo` là URL ảnh hoặc đường dẫn đến file trong `public/`, ví dụ `/logos/my-service.png`, nếu ứng dụng dùng đường dẫn khác. Đặt `"logo": null` để luôn dùng icon từ thư viện; Cockpit dùng `"icon": "linux"` theo cách này. URL nên dùng `https://`. Thẻ có URL sẽ mở tab mới; logo bị lỗi sẽ thay bằng icon đã cấu hình.
+## Services and logos
 
-Vite tự đọc JSON khi chạy dev. Sau khi thay đổi file, cần build và deploy lại để cập nhật site trên Cloudflare Pages; file không phải là cơ sở dữ liệu hay giao diện quản trị trực tuyến.
+Edit `src/config/services.json`. Each group has an `id`, `label`, and `services` array. Use `site` for personal services and `team` for team services. Each service has `name`, `description`, `color`, and `icon`, and may also have `url` and `logo`. Supported colors are `blue`, `peach`, `purple`, and `green`; supported icons are `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, and `linux`.
 
-Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
+If `logo` is omitted, the site uses `/favicon.ico` from the service URL's domain. Set `logo` to an image URL or a file path under `public/`, such as `/logos/my-service.png`. To bundle a local `.ico` with the app, put it in `src/assets/ico/` and set `"logo": "asset:filename.ico"`; Vite includes the file in the production build. Set `"logo": null` to always use the configured library icon; Cockpit uses `"icon": "linux"` this way. Prefer `https://` URLs. Service links open in a new tab; a failed logo falls back to the configured icon.
 
-## Ảnh nền
+The current directory includes AdGuard Home, Cockpit, Jellyfin, and Gunny Taskbar. Jellyfin uses a versioned favicon path; update its `logo` if a Jellyfin upgrade changes that path. If a service favicon requires authentication or does not return an image, use a publicly accessible image or bundle a local logo. Groups may be empty.
 
-Đặt ảnh vào `src/assets/backgrounds/` với tên như `background-1.jpg`, `background-2.webp`, `background-10.png`. Hỗ trợ `.jpg`, `.jpeg`, `.png` và `.webp`; ảnh được sắp theo số. Nếu hai ảnh cùng số, tên file quyết định thứ tự. Build/deploy lại sau khi thêm hoặc thay ảnh. Không có ảnh thì dùng gradient mặc định; nút chuyển ảnh xuất hiện khi có ít nhất hai ảnh.
+Vite reads the JSON configuration during development. Rebuild and deploy after changing it; this file is not a database or an online admin interface.
 
-## Thời tiết
+## Background images
 
-Widget xin quyền vị trí từ trình duyệt và lấy thời tiết hiện tại từ Open-Meteo, không cần API key. Geolocation yêu cầu HTTPS hoặc localhost. Nếu không cấp quyền hoặc vị trí không khả dụng, bạn có thể đặt `fallbackLocation` trong `src/config/site.ts`, ví dụ `{ latitude: 21.03, longitude: 105.85, name: 'Hà Nội' }`. Mặc định không có địa điểm dự phòng, widget sẽ hướng dẫn và cho phép thử lại. Lỗi mạng cũng có nút thử lại.
+Add images to `src/assets/backgrounds/` with names such as `background-1.jpg`, `background-2.webp`, and `background-10.png`. Supported extensions are `.jpg`, `.jpeg`, `.png`, and `.webp`; images are sorted numerically. If two files have the same number, their filenames determine the order. Rebuild and deploy after adding or replacing images. If no image is available, a default gradient is shown.
 
-Chọn **Tìm địa điểm**, nhập ít nhất hai ký tự và chọn từ gợi ý của Open-Meteo. Có thể dùng phím mũi tên, Enter và Escape. Địa điểm đã chọn được lưu trong trình duyệt để dùng lại; chọn **Dùng vị trí hiện tại** để xóa lựa chọn và quay lại vị trí trình duyệt. Tên tìm kiếm và tọa độ dùng để lấy thời tiết được gửi tới Open-Meteo; không cần tài khoản hay API key.
+With two or more images, desktop shows previous/next buttons at the sides. On mobile, those are replaced by a compact bottom control with previous/next buttons and an image counter. The background remains blurred on both form factors.
+
+## Weather
+
+The widget requests the browser's location and gets current weather from Open-Meteo; no API key is required. Geolocation requires HTTPS or localhost. If permission is denied or location is unavailable, set `fallbackLocation` in `src/config/site.ts`, for example `{ latitude: 21.03, longitude: 105.85, name: 'Hanoi' }`. By default there is no fallback location, so the widget offers guidance and a retry action. Network errors also include a retry action.
+
+Choose **Find a location**, enter at least two characters, and select a result from Open-Meteo. Use the arrow keys, Enter, and Escape to navigate. The selected location is stored in the browser; choose **Use current location** to clear it and return to browser geolocation. Search text and coordinates used for weather requests are sent to Open-Meteo. No account or API key is needed.
 
 ## Cloudflare Pages
 
-Kết nối repository với Cloudflare Pages, chọn build command `npm run build` và output directory `dist`. Đặt `GRAVATAR_EMAIL` trong environment variables của build trên Cloudflare, rồi deploy lại. Biến build cần được bảo vệ trong tài khoản Cloudflare; không commit email vào repository. Trang không yêu cầu backend.
+Connect the repository to Cloudflare Pages, set the build command to `npm run build`, and set the output directory to `dist`. Add `GRAVATAR_EMAIL` as a build environment variable if you want to use Gravatar. Keep it protected in Cloudflare and do not commit it. The site does not require a backend.
 
-Trong Cloudflare Pages, thêm `notelysia.com` ở **Custom domains** và làm theo hướng dẫn xác minh/cấu hình DNS cho domain gốc. Domain gốc phải thuộc zone Cloudflare tương ứng; kiểm tra các bản ghi hiện có trước khi thay đổi để không ảnh hưởng các subdomain dịch vụ. Việc cấu hình tại Cloudflare không được thực hiện tự động bởi dự án này.
+Add `notelysia.com` under **Custom domains** in Cloudflare Pages and follow its instructions for verifying and configuring DNS for the apex domain. The domain must belong to the relevant Cloudflare zone. Check existing DNS records before changing them so service subdomains are not affected. This project does not configure Cloudflare automatically.
 
-## GitHub Actions deploy lên server riêng
+## GitHub Actions deployment to a self-hosted server
 
-Workflow `.github/workflows/deploy.yml` chạy test và build trên GitHub-hosted runner khi tạo pull request vào `main`, push lên `main` hoặc chạy thủ công. Khi push hoặc chạy thủ công trên `main`, GitHub gửi artifact `dist/` cho GitHub Actions self-hosted runner trên server để chép vào thư mục web. Server không cần mở SSH inbound; runner kết nối outbound tới GitHub. Build của pull request không nhận secret `GRAVATAR_EMAIL`.
+The `.github/workflows/deploy.yml` workflow runs tests and builds on a GitHub-hosted runner for pull requests to `main`, pushes to `main`, and manual runs. On a push or manual run on `main`, GitHub sends the `dist/` artifact to a GitHub Actions self-hosted runner on the server, which copies it to the web directory. The server does not need inbound SSH; the runner connects outbound to GitHub. Pull-request builds do not receive the `GRAVATAR_EMAIL` secret.
 
-Đăng ký thêm một **GitHub Actions self-hosted runner** trên server, gắn nhãn `notelysia-landing-ci` và chạy runner dưới tài khoản có quyền ghi vào thư mục web. Không chạy runner này bằng tài khoản `root`. Server cần outbound HTTPS tới GitHub để runner nhận job và tải artifact; `rsync` cần được cài trên server. Chỉ job deploy trên `main` dùng runner này, không dùng nó cho pull request.
+Register a **GitHub Actions self-hosted runner** on the server, label it `notelysia-landing-ci`, and run it as an account that can write to the web directory. Do not run it as `root`. The server needs outbound HTTPS access to GitHub so the runner can receive jobs and download artifacts; `rsync` must be installed. Only deployments on `main` use this runner, not pull requests.
 
-Trong **Settings → Environments → `landing-env` → Environment variables**, tạo:
+Under **Settings → Environments → `landing-env` → Environment variables**, create:
 
-- Variable `DEPLOY_PATH`, là thư mục tuyệt đối dành riêng cho website và có quyền ghi cho tài khoản chạy runner, ví dụ `/var/www/notelysia`.
+- `DEPLOY_PATH`: a dedicated absolute path for the site that is writable by the runner account, for example `/var/www/notelysia`.
 
-Trong **Settings → Secrets and variables → Actions → Repository secrets**, tạo secret `GRAVATAR_EMAIL` nếu muốn tạo avatar Gravatar khi build.
+Under **Settings → Secrets and variables → Actions → Repository secrets**, create the `GRAVATAR_EMAIL` secret if you want to use Gravatar.
 
-Lệnh đồng bộ xóa các file cũ trong `DEPLOY_PATH`, vì vậy không dùng chung thư mục này với dữ liệu khác.
+The sync command deletes old files in `DEPLOY_PATH`, so do not share that directory with other data.
 
-GitLab Runner hiện có không trực tiếp chạy workflow GitHub Actions. Có thể cài GitHub Actions runner song song trên cùng server; hai runner là hai dịch vụ riêng biệt.
+An existing GitLab Runner does not run GitHub Actions workflows directly. A GitHub Actions runner can be installed alongside it on the same server; they are separate services.
