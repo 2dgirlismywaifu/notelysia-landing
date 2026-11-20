@@ -13,6 +13,7 @@ export type ServiceGroup = { id: 'site' | 'team'; label: string; services: Servi
 
 export const site = {
     name: 'Notelysia',
+    sourceUrl: 'https://github.com/2dgirlismywaifu/notelysia-landing',
     // Ví dụ: { latitude: 21.03, longitude: 105.85, name: 'Hà Nội' }
     fallbackLocation: undefined as { latitude: number; longitude: number; name: string } | undefined,
     groups: serviceGroups as ServiceGroup[],

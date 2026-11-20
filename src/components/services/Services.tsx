@@ -5,11 +5,17 @@ import { SiLinux } from 'react-icons/si';
 import type { Service, ServiceGroup } from '../../config/site';
 
 const icons = { cloud: Cloud, photo: Image, play: Play, server: Server, message: MessageCircle, calendar: CalendarDays, file: FileText, check: CheckSquare, linux: SiLinux };
+const localLogos = import.meta.glob<string>('../../assets/ico/*', {
+    eager: true, query: '?url', import: 'default',
+});
 
 function ServiceCard({ service }: { service: Service }) {
     const [failedLogo, setFailedLogo] = useState<string | null>(null);
     const Icon = icons[service.icon];
     let logo = service.logo;
+    if (logo?.startsWith('asset:')) {
+        logo = localLogos[`../../assets/ico/${logo.slice('asset:'.length)}`];
+    }
     if (logo === undefined && service.url) {
         try {
             logo = new URL('/favicon.ico', service.url).href;

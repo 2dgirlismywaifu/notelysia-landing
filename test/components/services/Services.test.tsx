@@ -33,6 +33,14 @@ describe('Services', () => {
         expect(container.querySelector('.service-icon .lucide-cloud')).toBeTruthy();
     });
 
+    it('resolves a bundled local icon configured by asset filename', () => {
+        const localGroups: ServiceGroup[] = [
+            { id: 'site', label: 'My services', services: [{ name: 'Gunny Taskbar', description: 'Health check', color: 'peach', icon: 'check', url: 'https://example.com', logo: 'asset:gunny-taskbar.ico' }] },
+        ];
+        const { container } = render(<Services groups={localGroups} />);
+        expect(container.querySelector('.service-icon img')?.getAttribute('src')).toContain('gunny-taskbar.ico');
+    });
+
     it('uses the Linux icon instead of a favicon when logo is null', () => {
         const linuxGroups: ServiceGroup[] = [
             { id: 'site', label: 'My services', services: [{ name: 'Cockpit', description: 'Linux', color: 'blue', icon: 'linux', logo: null, url: 'https://example.com' }] },

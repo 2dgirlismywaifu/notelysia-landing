@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowDown, Heart, Sparkles } from 'lucide-react';
+import { ArrowDown, Github, Heart, Sparkles } from 'lucide-react';
 import fallbackFavicon from 'lucide-static/icons/sparkles.svg?url';
 import Avatar, { gravatarUrl } from './components/avatar/Avatar';
 import Background from './components/background/Background';
@@ -26,7 +26,7 @@ export default function App() {
                 <div className="page-content">
                     <header className="topbar">
                         <a className="brand" href="#home" aria-label="Notelysia home"><Avatar compact /><span>notelysia<span className="brand-dot">.</span></span></a>
-                        <div className="topbar-right"><span className="topbar-caption">A LITTLE SPACE ON THE INTERNET</span><span className="topbar-divider" /><Weather fallbackLocation={site.fallbackLocation} /></div>
+                        <div className="topbar-right"><span className="topbar-caption">A LITTLE SPACE ON THE INTERNET</span><span className="topbar-divider" /><Weather fallbackLocation={site.fallbackLocation} /><a className="source-link" href={site.sourceUrl} target="_blank" rel="noreferrer" aria-label="Xem mã nguồn trên GitHub" title="Mã nguồn trên GitHub"><Github size={18} aria-hidden="true" /></a></div>
                     </header>
                     <main id="home">
                         <section className="hero" aria-labelledby="welcome-title">

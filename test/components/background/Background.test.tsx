@@ -20,6 +20,13 @@ describe('Background', () => {
 
     it('wraps in both directions and falls back when an image fails', () => {
         const { container } = render(<Background images={['one.jpg', 'two.jpg']} />);
+        const mobileControls = screen.getByRole('group', { name: 'Điều khiển ảnh nền' });
+        expect(mobileControls.textContent).toContain('01 / 02');
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo trên điện thoại' }));
+        expect(mobileControls.textContent).toContain('02 / 02');
+        expect(container.querySelector('.background img')?.getAttribute('src')).toBe('two.jpg');
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
+        expect(container.querySelector('.background img')?.getAttribute('src')).toBe('one.jpg');
         fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
         expect(container.querySelector('.background img')?.getAttribute('src')).toBe('two.jpg');
         fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo' }));

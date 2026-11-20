@@ -3,6 +3,10 @@ import { site } from '../../src/config/site';
 import serviceGroups from '../../src/config/services.json';
 
 describe('site configuration', () => {
+    it('exposes the source repository URL', () => {
+        expect(site.sourceUrl).toMatch(/^https:\/\/github\.com\/[^/]+\/[^/]+$/);
+    });
+
     it('loads valid service groups from the JSON file', () => {
         expect(site.groups).toEqual(serviceGroups);
         expect(site.groups.map(({ id }) => id)).toEqual(['site', 'team']);

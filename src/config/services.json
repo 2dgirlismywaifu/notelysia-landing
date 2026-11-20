@@ -35,8 +35,9 @@
         "services": [
             {
                 "name": "Gunny Taskbar",
-                "description": "Gunny Taskbar mini-game",
+                "description": "Gunny Taskbar health check",
                 "url": "https://gunny-taskbar.notelysia.com",
+                "logo": "asset:gunny-taskbar.ico",
                 "color": "peach",
                 "icon": "check"
             }
