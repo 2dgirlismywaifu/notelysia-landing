@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, CheckSquare, Cloud, FileText, Image, MessageCircle, Monitor, Play, Server, Shield } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, CheckSquare, Cloud, FileText, Image, KeyRound, MessageCircle, Monitor, Play, Server, Shield } from 'lucide-react';
 import { SiLinux } from 'react-icons/si';
 import type { Service } from '../../config/site';
 
 const PAGE_SIZE = 4;
-const icons = { cloud: Cloud, photo: Image, play: Play, server: Server, message: MessageCircle, calendar: CalendarDays, file: FileText, check: CheckSquare, linux: SiLinux, shield: Shield, monitor: Monitor };
+const icons = { cloud: Cloud, photo: Image, play: Play, server: Server, message: MessageCircle, calendar: CalendarDays, file: FileText, check: CheckSquare, linux: SiLinux, shield: Shield, monitor: Monitor, key: KeyRound };
 const localLogos = import.meta.glob<string>('../../assets/ico/*', {
     eager: true, query: '?url', import: 'default',
 });

@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import Services from '../../../src/components/services/Services';
+import { site } from '../../../src/config/site';
 import type { ServiceGroup } from '../../../src/config/site';
 
 afterEach(cleanup);
@@ -58,6 +59,15 @@ describe('Services', () => {
         const { container } = render(<Services groups={linuxGroups} />);
         expect(container.querySelector('.service-icon img')).toBeNull();
         expect(container.querySelector('.service-icon svg[data-icon="linux"]')).toBeTruthy();
+    });
+
+    it('uses a key icon if the configured password manager logo fails', () => {
+        render(<Services groups={site.groups} />);
+        const link = screen.getByRole('link', { name: /VaultWarden/ });
+        const logo = link.querySelector('.service-icon img');
+        expect(logo?.getAttribute('src')).toBe('https://selfvault.notelysia.com/images/favicon-32x32.png');
+        fireEvent.error(logo!);
+        expect(link.querySelector('.service-icon .lucide-key-round')).toBeTruthy();
     });
 
     it('supports mouse and keyboard tab navigation and empty groups', () => {

@@ -17,7 +17,7 @@ describe('site configuration', () => {
                 expect(service.name).toBeTruthy();
                 expect(typeof service.description).toBe('string');
                 expect(['blue', 'peach', 'purple', 'green']).toContain(service.color);
-                expect(['cloud', 'photo', 'play', 'server', 'message', 'calendar', 'file', 'check', 'linux', 'shield', 'monitor']).toContain(service.icon);
+                expect(['cloud', 'photo', 'play', 'server', 'message', 'calendar', 'file', 'check', 'linux', 'shield', 'monitor', 'key']).toContain(service.icon);
                 if (service.url) expect(new URL(service.url).protocol).toMatch(/^https?:$/);
                 if (service.redirect !== undefined) expect(typeof service.redirect).toBe('boolean');
                 if (service.logo != null) expect(typeof service.logo).toBe('string');

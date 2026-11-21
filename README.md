@@ -52,7 +52,7 @@ Edit `src/config/services.json`. Each group has an `id`, `label`, and `services`
 | `url`                 | Destination URL for the service.                                                                                                           |
 | `redirect`            | `true` allows navigation; `false` renders a non-clickable card. Defaults to `true` when omitted.                                           |
 | `color`               | Card icon color. Supported values: `blue`, `peach`, `purple`, `green`.                                                                     |
-| `icon`                | Fallback icon. Supported values: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`. |
+| `icon`                | Fallback icon. Supported values: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`, `key`. |
 | `logo`                | Optional image URL, public path, local bundled asset, or `null` to always use the fallback icon.                                           |
 
 | Logo configuration             | Behavior                                                                 |
@@ -68,7 +68,7 @@ The current directory includes:
 
 | Group  | Services                                             |
 |--------|------------------------------------------------------|
-| `site` | AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk |
+| `site` | AdGuard Home, Cockpit, Jellyfin, VaultWarden, WireGuard, RustDesk |
 | `team` | Gunny Taskbar                                        |
 
 Jellyfin uses a versioned favicon path; update its `logo` if a Jellyfin upgrade changes that path. If a service favicon requires authentication or does not return an image, use a publicly accessible image or bundle a local logo. Groups may be empty.

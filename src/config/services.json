@@ -31,6 +31,15 @@
                 "icon": "play"
             },
             {
+                "name": "VaultWarden",
+                "description": "Bitwarden compatible password manager",
+                "url": "https://selfvault.notelysia.com",
+                "redirect": true,
+                "logo": "https://selfvault.notelysia.com/images/favicon-32x32.png",
+                "color": "green",
+                "icon": "key"
+            },
+            {
                 "name": "WireGuard",
                 "description": "Secure VPN connection",
                 "url": "https://wireguard.notelysia.com",

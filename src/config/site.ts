@@ -7,7 +7,7 @@ export type Service = {
     redirect?: boolean;
     logo?: string | null;
     color: string;
-    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux' | 'shield' | 'monitor';
+    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux' | 'shield' | 'monitor' | 'key';
 };
 
 export type ServiceGroup = { id: 'site' | 'team'; label: string; services: Service[] };

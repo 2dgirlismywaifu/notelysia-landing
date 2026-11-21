@@ -52,7 +52,7 @@ Chỉnh danh sách trong `src/config/services.json`. Mỗi nhóm có `id`, `labe
 | `url`                 | Địa chỉ dịch vụ.                                                                                                                         |
 | `redirect`            | `true` cho phép chuyển trang; `false` hiển thị thẻ không thể bấm. Mặc định là `true` nếu bỏ qua.                                         |
 | `color`               | Màu icon của thẻ. Giá trị hỗ trợ: `blue`, `peach`, `purple`, `green`.                                                                    |
-| `icon`                | Icon dự phòng. Giá trị hỗ trợ: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`. |
+| `icon`                | Icon dự phòng. Giá trị hỗ trợ: `cloud`, `photo`, `play`, `server`, `message`, `calendar`, `file`, `check`, `linux`, `shield`, `monitor`, `key`. |
 | `logo`                | URL ảnh, đường dẫn public, asset local được bundle, hoặc `null` để luôn dùng icon dự phòng.                                              |
 
 | Cấu hình logo                    | Cách hoạt động                                              |
@@ -68,7 +68,7 @@ Danh sách dịch vụ hiện tại:
 
 | Nhóm   | Dịch vụ                                              |
 |--------|------------------------------------------------------|
-| `site` | AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk |
+| `site` | AdGuard Home, Cockpit, Jellyfin, VaultWarden, WireGuard, RustDesk |
 | `team` | Gunny Taskbar                                        |
 
 Jellyfin dùng đường dẫn favicon có version; nếu nâng cấp Jellyfin làm logo không tải được, hãy cập nhật `logo`. Nếu favicon yêu cầu đăng nhập hoặc không trả về ảnh, hãy dùng ảnh công khai hoặc bundle logo cục bộ. Mỗi nhóm có thể để trống.
@@ -77,7 +77,7 @@ Vite tự đọc JSON khi chạy dev. Sau khi thay đổi file, cần build và 
 
 Thẻ dịch vụ hiển thị bốn mục mỗi trang trên cả desktop và mobile. Component dùng chung `ServiceList` phân trang thay vì tạo thanh cuộn lồng bên trong.
 
-Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin, WireGuard, RustDesk và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
+Các dịch vụ đã được cấu hình: AdGuard Home, Cockpit, Jellyfin, VaultWarden, WireGuard, RustDesk và Gunny Taskbar. Jellyfin dùng đường dẫn favicon có hash theo phiên bản; nếu nâng cấp Jellyfin làm logo không tải được, cập nhật `logo` theo đường dẫn icon trên trang Jellyfin. Nếu favicon của dịch vụ yêu cầu đăng nhập hoặc không trả về ảnh, hãy cho phép truy cập ảnh công khai hoặc cấu hình file logo cục bộ. Mỗi nhóm có thể để trống.
 
 ## Ảnh nền
 
