@@ -9,7 +9,7 @@
                 "url": "https://adguardhome.notelysia.com",
                 "redirect": true,
                 "logo": "https://adguardhome.notelysia.com/assets/favicon.png",
-                "color": "green",
+                "color": "purple",
                 "icon": "server"
             },
             {
@@ -18,7 +18,7 @@
                 "url": "https://cockpit-home.notelysia.com",
                 "redirect": true,
                 "logo": null,
-                "color": "blue",
+                "color": "green",
                 "icon": "linux"
             },
             {
@@ -27,7 +27,7 @@
                 "url": "https://jellyfin.notelysia.com",
                 "redirect": true,
                 "logo": "https://jellyfin.notelysia.com/web/favicons/touchicon144.png",
-                "color": "purple",
+                "color": "blue",
                 "icon": "play"
             },
             {
@@ -36,7 +36,7 @@
                 "url": "https://selfvault.notelysia.com",
                 "redirect": true,
                 "logo": "https://selfvault.notelysia.com/images/favicon-32x32.png",
-                "color": "green",
+                "color": "peach",
                 "icon": "key"
             },
             {
@@ -45,7 +45,7 @@
                 "url": "https://wireguard.notelysia.com",
                 "redirect": false,
                 "logo": null,
-                "color": "green",
+                "color": "purple",
                 "icon": "shield"
             },
             {
@@ -54,7 +54,7 @@
                 "url": "https://rustdesk.notelysia.com",
                 "redirect": false,
                 "logo": null,
-                "color": "blue",
+                "color": "green",
                 "icon": "monitor"
             }
         ]
@@ -69,6 +69,15 @@
                 "url": "https://gunny-taskbar.notelysia.com",
                 "redirect": true,
                 "logo": "asset:gunny-taskbar.ico",
+                "color": "blue",
+                "icon": "check"
+            },
+            {
+                "name": "Taskbar Land (Development)",
+                "description": "Taskbar Land development early access",
+                "url": "https://demo-taskbar-land.notelysia.com",
+                "redirect": true,
+                "logo": "asset:taskbar-land.ico",
                 "color": "peach",
                 "icon": "check"
             }
