@@ -27,12 +27,14 @@ describe('ServiceList', () => {
         fireEvent.click(next);
 
         expect(container.querySelectorAll('.service-card')).toHaveLength(1);
+        expect(container.querySelector('.service-grid-next')).toBeTruthy();
         expect(screen.getByRole('link', { name: /Service 5/ })).toBeTruthy();
         expect(container.querySelector('.service-pagination > span')?.textContent?.replace(/\s/g, '')).toBe('2/2');
         expect(next.hasAttribute('disabled')).toBe(true);
         expect(previous.hasAttribute('disabled')).toBe(false);
         fireEvent.click(previous);
         expect(container.querySelectorAll('.service-card')).toHaveLength(4);
+        expect(container.querySelector('.service-grid-previous')).toBeTruthy();
     });
 
     it('hides pagination for four or fewer services and handles empty groups', () => {

@@ -15,6 +15,8 @@ Cần Node.js 20 hoặc 22+ và npm. Cài dependencies bằng `npm install`, sau
 
 Site chạy được ngay cả khi chưa có email hoặc ảnh nền.
 
+Giao diện dùng animation CSS ngắn, bao gồm chuyển ảnh nền và trang dịch vụ, đồng thời tôn trọng tùy chọn giảm chuyển động của hệ điều hành.
+
 ## Cấu trúc dự án
 
 | Đường dẫn         | Nội dung                                                      |

@@ -30,6 +30,8 @@ function makeBlurredBackground(image: HTMLImageElement): string | null {
 export default function Background({ images = backgrounds }: { images?: string[] }) {
     const [index, setIndex] = useState(0);
     const [failed, setFailed] = useState<string[]>([]);
+    const [shown, setShown] = useState<string | null>(images[0] ?? null);
+    const [previous, setPrevious] = useState<string | null>(null);
     const current = images[index];
 
     useEffect(() => {
@@ -58,15 +60,24 @@ export default function Background({ images = backgrounds }: { images?: string[]
     }, [current]);
 
     function move(direction: number) {
+        setPrevious(null);
         setIndex((previous) => (previous + direction + images.length) % images.length);
+    }
+
+    function imageFailed(image: string) {
+        setFailed((previous) => [...previous, image]);
+        setShown(null);
+        setPrevious(null);
     }
 
     return (
         <>
             <div className="background" aria-hidden="true">
-                {current && !failed.includes(current) && (
-                    <img key={current} src={current} alt="" onError={() => setFailed((previous) => [...previous, current])} />
-                )}
+                {current && !failed.includes(current) && [
+                    previous && previous !== shown && <img key={previous} src={previous} alt="" />,
+                    shown && !failed.includes(shown) && <img key={shown} src={shown} alt="" className={previous ? 'background-image-enter' : undefined} onError={() => imageFailed(shown)} onAnimationEnd={() => setPrevious(null)} />,
+                    current !== shown && !failed.includes(current) && <img key={current} src={current} alt="" className="background-image-pending" onLoad={() => { setPrevious(shown); setShown(current); }} onError={() => imageFailed(current)} />,
+                ]}
             </div>
             <div className="background-shade" aria-hidden="true" />
             {images.length > 1 && (

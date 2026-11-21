@@ -43,19 +43,20 @@ function ServiceCard({ service }: { service: Service }) {
 
 export default function ServiceList({ services }: { services: Service[] }) {
     const [page, setPage] = useState(0);
+    const [direction, setDirection] = useState<'next' | 'previous' | null>(null);
     const pageCount = Math.ceil(services.length / PAGE_SIZE);
     const visibleServices = services.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
     return (
         <div className="service-list">
-            <div className="service-grid">
+            <div key={page} className={`service-grid${direction ? ` service-grid-${direction}` : ''}`}>
                 {visibleServices.length ? visibleServices.map((service) => <ServiceCard key={service.name} service={service} />) : <p className="empty-services">Chưa có dịch vụ nào trong nhóm này.</p>}
             </div>
             {pageCount > 1 && (
                 <nav className="service-pagination" aria-label="Service pages">
-                    <button type="button" aria-label="Previous service page" onClick={() => setPage((current) => Math.max(0, current - 1))} disabled={page === 0}><ArrowLeft size={16} aria-hidden="true" /></button>
+                    <button type="button" aria-label="Previous service page" onClick={() => { setDirection('previous'); setPage((current) => Math.max(0, current - 1)); }} disabled={page === 0}><ArrowLeft size={16} aria-hidden="true" /></button>
                     <span aria-live="polite">{page + 1} <span aria-hidden="true">/</span> {pageCount}</span>
-                    <button type="button" aria-label="Next service page" onClick={() => setPage((current) => Math.min(pageCount - 1, current + 1))} disabled={page === pageCount - 1}><ArrowRight size={16} aria-hidden="true" /></button>
+                    <button type="button" aria-label="Next service page" onClick={() => { setDirection('next'); setPage((current) => Math.min(pageCount - 1, current + 1)); }} disabled={page === pageCount - 1}><ArrowRight size={16} aria-hidden="true" /></button>
                 </nav>
             )}
         </div>

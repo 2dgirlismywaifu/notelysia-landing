@@ -15,24 +15,52 @@ describe('Background', () => {
         expect(screen.queryByRole('button')).toBeNull();
         rerender(<Background images={['one.jpg']} />);
         expect(container.querySelector('.background img')?.getAttribute('src')).toBe('one.jpg');
+        fireEvent.load(container.querySelector('.background img')!);
         expect(screen.queryByRole('button')).toBeNull();
     });
 
-    it('wraps in both directions and falls back when an image fails', () => {
+    it('keeps the previous image until the next image loads and fades in', () => {
         const { container } = render(<Background images={['one.jpg', 'two.jpg']} />);
         const mobileControls = screen.getByRole('group', { name: 'Điều khiển ảnh nền' });
         expect(mobileControls.textContent).toContain('01 / 02');
         fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo trên điện thoại' }));
         expect(mobileControls.textContent).toContain('02 / 02');
-        expect(container.querySelector('.background img')?.getAttribute('src')).toBe('two.jpg');
-        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
+        const pending = container.querySelector<HTMLImageElement>('.background-image-pending')!;
+        expect(pending.getAttribute('src')).toBe('two.jpg');
         expect(container.querySelector('.background img')?.getAttribute('src')).toBe('one.jpg');
-        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
+        fireEvent.load(pending);
+        expect(container.querySelectorAll('.background img')).toHaveLength(2);
+        expect(container.querySelector('.background-image-enter')?.getAttribute('src')).toBe('two.jpg');
+        fireEvent.animationEnd(container.querySelector('.background-image-enter')!);
+        expect(container.querySelectorAll('.background img')).toHaveLength(1);
         expect(container.querySelector('.background img')?.getAttribute('src')).toBe('two.jpg');
+    });
+
+    it('handles rapid navigation and falls back when an image fails', () => {
+        const { container } = render(<Background images={['one.jpg', 'two.jpg', 'three.jpg']} />);
         fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo' }));
-        const image = container.querySelector('.background img');
-        expect(image?.getAttribute('src')).toBe('one.jpg');
-        fireEvent.error(image!);
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo' }));
+        expect(container.querySelectorAll('.background img')).toHaveLength(2);
+        expect(container.querySelector('.background-image-pending')?.getAttribute('src')).toBe('three.jpg');
+        fireEvent.error(container.querySelector('.background-image-pending')!);
         expect(container.querySelector('.background img')).toBeNull();
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo' }));
+        const pending = container.querySelector('.background-image-pending')!;
+        expect(pending.getAttribute('src')).toBe('one.jpg');
+        fireEvent.load(pending);
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
+        expect(container.querySelector('.background img')).toBeNull();
+    });
+
+    it('can return to the previous image while a fade is in progress', () => {
+        const { container } = render(<Background images={['one.jpg', 'two.jpg']} />);
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền tiếp theo' }));
+        fireEvent.load(container.querySelector('.background-image-pending')!);
+        fireEvent.click(screen.getByRole('button', { name: 'Ảnh nền trước' }));
+        expect(container.querySelectorAll('.background img')).toHaveLength(2);
+        expect(container.querySelector('.background-image-pending')?.getAttribute('src')).toBe('one.jpg');
+        fireEvent.load(container.querySelector('.background-image-pending')!);
+        fireEvent.animationEnd(container.querySelector('.background-image-enter')!);
+        expect(container.querySelector('.background img')?.getAttribute('src')).toBe('one.jpg');
     });
 });

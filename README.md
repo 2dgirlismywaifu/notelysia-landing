@@ -15,6 +15,8 @@ Node.js 20 or 22+ and npm are required. Install dependencies with `npm install`,
 
 The site works without a configured email address or background images.
 
+The interface uses short CSS animations, including background crossfades and service-page transitions, and respects the operating system's reduced-motion preference.
+
 ## Project structure
 
 | Path              | Contents                                                             |
