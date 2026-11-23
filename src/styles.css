@@ -737,6 +737,11 @@ a.service-card:hover {
     color: #b5d3c1;
 }
 
+.icon-red {
+    background: rgba(213, 122, 122, .17);
+    color: #efb2b2;
+}
+
 .service-copy {
     min-width: 0;
     flex: 1;

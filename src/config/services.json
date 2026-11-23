@@ -31,13 +31,13 @@
                 "icon": "play"
             },
             {
-                "name": "VaultWarden",
-                "description": "Bitwarden compatible password manager",
-                "url": "https://selfvault.notelysia.com",
+                "name": "Stalwart OSS",
+                "description": "Stalwart OSS Mail Server Self-Hosted",
+                "url": "https://mail.notelysia.com",
                 "redirect": true,
-                "logo": "https://selfvault.notelysia.com/images/favicon-32x32.png",
-                "color": "peach",
-                "icon": "key"
+                "logo": "https://mail.notelysia.com/account/favicon.ico",
+                "color": "red",
+                "icon": "mail"
             },
             {
                 "name": "WireGuard",

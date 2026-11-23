@@ -45,4 +45,16 @@ describe('ServiceList', () => {
         expect(screen.getByText('Chưa có dịch vụ nào trong nhóm này.')).toBeTruthy();
         expect(screen.queryByRole('navigation', { name: 'Service pages' })).toBeNull();
     });
+
+    it('renders the mail icon with the red service color', () => {
+        const { container } = render(<ServiceList services={[{
+            name: 'Stalwart OSS',
+            description: 'Self-hosted mail server',
+            color: 'red',
+            icon: 'mail',
+            logo: null,
+        }]} />);
+
+        expect(container.querySelector('.service-icon.icon-red svg[data-icon="mail"]')).toBeTruthy();
+    });
 });

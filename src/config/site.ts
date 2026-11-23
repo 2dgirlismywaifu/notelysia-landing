@@ -6,8 +6,8 @@ export type Service = {
     url?: string;
     redirect?: boolean;
     logo?: string | null;
-    color: string;
-    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux' | 'shield' | 'monitor' | 'key';
+    color: 'blue' | 'peach' | 'purple' | 'green' | 'red';
+    icon: 'cloud' | 'photo' | 'play' | 'server' | 'message' | 'calendar' | 'file' | 'check' | 'linux' | 'shield' | 'monitor' | 'key' | 'mail';
 };
 
 export type ServiceGroup = { id: 'site' | 'team'; label: string; services: Service[] };
